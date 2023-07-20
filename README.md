@@ -1,2 +1,2 @@
-# football_stats_pro_backend
+# football_stats_pro
 This is football stats pro app backend APIs
