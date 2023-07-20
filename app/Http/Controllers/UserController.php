@@ -60,7 +60,7 @@ if ($validator->fails()) {
             $request->user()->currentAccessToken()->delete();
             return response()->json([
                 'status_code'=>200,
-                'messge'=>"Token deleted successfully"
+                'messge'=>"TLoged out successfully"
             ]);
         }
 }
