@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LiveStatsController;
+use App\Http\Controllers\MatchesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,7 +26,17 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/logout', [UserController::class,'logout']);
 });
 
-Route::get('/live-stats', [LiveStatsController::class, 'getLiveStats']);
-Route::post("login",[UserController::class,'index']);
+Route::post("login", [UserController::class,'index']);
 Route::post('/register', [UserController::class,'register']);
-Route::get("users",[UserController::class,'getUsers']);
+Route::get("users", [UserController::class,'getUsers']);
+
+Route::get('/live-stats', [LiveStatsController::class, 'getLiveStats']);
+
+Route::get("/day-basic", [MatchesController::class,'getDayBasic']);
+Route::get("/day-full", [MatchesController::class,'getDayFull']);
+Route::get("/view-basic", [MatchesController::class,'getViewBasic']);
+Route::get("/view-full", [MatchesController::class,'getViewFull']);
+Route::get("/by-basic", [MatchesController::class,'getByBasic']);
+Route::get("/by-full", [MatchesController::class,'getByFull']);
+Route::get("/odds", [MatchesController::class,'getOdds']);
+Route::get("/view-progressive", [MatchesController::class,'getViewProgressive']);
