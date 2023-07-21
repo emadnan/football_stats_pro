@@ -63,4 +63,8 @@ if ($validator->fails()) {
                 'messge'=>"TLoged out successfully"
             ]);
         }
+        function getUsers(){
+            $users = User::all();
+            return response()->json(['users'=> $users]);
+        }
 }
