@@ -30,6 +30,10 @@ Route::post("login", [UserController::class,'index']);
 Route::post('/register', [UserController::class,'register']);
 Route::get("users", [UserController::class,'getUsers']);
 
+// New routes for OTP handling
+Route::post('/send-otp', [UserController::class, 'sendOTP']); // Route to send OTP during registration
+Route::post('/verify-otp', [UserController::class, 'verifyOTP']); // Route to verify OTP during registration
+
 Route::get('/live-stats', [LiveStatsController::class, 'getLiveStats']);
 
 Route::get("/day-basic", [MatchesController::class,'getDayBasic']);
