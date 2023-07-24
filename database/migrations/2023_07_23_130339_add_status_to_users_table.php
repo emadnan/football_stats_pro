@@ -14,7 +14,7 @@ class AddStatusToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('status')->default('pending'); // Add the status column with a default value 'pending'
+            $table->integer('status')->default('0'); // Add the status column with a default value 'pending'
         });
     }
 
