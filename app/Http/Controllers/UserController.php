@@ -23,11 +23,11 @@ class UserController extends Controller
         }
 
         // Check if the user status is active
-        if ($user->status !== 'active') {
-            return response([
-                'message' => ['Your account is not active. Please contact the administrator.']
-            ], 403);
-        }
+        // if ($user->status !== '1') {
+        //     return response([
+        //         'message' => ['Your account is not active. Please contact the administrator.']
+        //     ], 403);
+        // }
 
         $token = $user->createToken('my-app-token')->plainTextToken;
 
