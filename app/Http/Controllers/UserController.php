@@ -124,7 +124,7 @@ class UserController extends Controller
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'status_code'=>200,
-            'messge'=>"TLoged out successfully"
+            'messge'=>"logout successfully"
         ]);
     }
 
