@@ -16,14 +16,14 @@ class UserController extends Controller
     {
         $user = User::where('email', $request->email)->first();
 
-        if (!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password) && $user->status == 1) {
             return response([
                 'message' => ['These credentials do not match our records.']
             ], 404);
         }
 
         // Check if the user status is active
-        if ($user->status !== '0') {
+        if ($user->status !== '1') {
             return response([
                 'message' => ['Your account is not active. Please contact the administrator.']
             ], 403);
