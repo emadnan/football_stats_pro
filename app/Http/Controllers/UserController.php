@@ -63,7 +63,7 @@ class UserController extends Controller
         $user->phone_no = $request->phone_no;
         $user->password = bcrypt($request->password);
         $user->otp = $otp; // Save the generated OTP
-        $user->status = 'pending'; // Set a temporary status for pending verification
+        // $user->status = ''; // Set a temporary status for pending verification
         $user->otp_generated_at = now();
         $user->save();
     
@@ -102,7 +102,7 @@ class UserController extends Controller
 
         // Verify OTP and update user status
         $user->otp = null;
-        $user->status = 'active'; // Set user status to active after OTP verification
+        $user->status = 1; // Set user status to active after OTP verification
         $user->save();
 
         return response()->json([
