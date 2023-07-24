@@ -7,6 +7,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
+use Illuminate\Support\Facades\Mail;
+use App\Mail\OtpMail;
+
 class UserController extends Controller
 {
     function index(Request $request)
@@ -61,8 +64,12 @@ class UserController extends Controller
         $user->password = bcrypt($request->password);
         $user->otp = $otp; // Save the generated OTP
         $user->status = 'pending'; // Set a temporary status for pending verification
+        $user->otp_generated_at = now();
         $user->save();
     
+        $fromAddress = env('MAIL_FROM_ADDRESS');
+        Mail::to($user->email)->send(new OtpMail($otp, $user->first_name, $fromAddress));
+
         return response()->json([
             'status_code' => 200,
             'message' => "OTP sent to the registered phone number",
@@ -87,6 +94,12 @@ class UserController extends Controller
             return response()->json(['status_code' => 401, 'message' => "Invalid OTP"], 401);
         }
 
+        // Check if OTP has expired (more than 2 minutes have passed)
+        $otpExpirationTime = now()->subMinutes(2);
+        if ($user->otp_generated_at < $otpExpirationTime) {
+            return response()->json(['status_code' => 401, 'message' => "OTP has expired"], 401);
+        }
+
         // Verify OTP and update user status
         $user->otp = null;
         $user->status = 'active'; // Set user status to active after OTP verification
@@ -102,7 +115,7 @@ class UserController extends Controller
 
     private function generateOTP()
     {
-        return str_pad(random_int(0, 999999), 6, '0', STR_PAD_LEFT);
+        return str_pad(random_int(0, 9999), 4, '0', STR_PAD_LEFT);
     }
 
     public function logout(Request $request)
