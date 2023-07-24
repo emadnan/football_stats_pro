@@ -68,8 +68,6 @@ class UserController extends Controller
         $user->save();
     
         $fromAddress = env('MAIL_FROM_ADDRESS');
-        print_r($fromAddress);
-        exit;
         Mail::to($user->email)->send(new OtpMail($otp, $user->first_name, $fromAddress));
 
         return response()->json([
