@@ -76,6 +76,71 @@ class UserController extends Controller
         ]);
     }
     
+    public function getUserById($id)
+    {
+        $user = User::find($id);
+    
+        if (!$user) {
+            return response()->json(['status_code' => 404, 'message' => "User not found"], 404);
+        }
+    
+        return response()->json([
+            'status_code' => 200,
+            'user' => $user,
+        ]);
+    }
+
+    public function updateUser(Request $request, $id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['status_code' => 404, 'message' => "User not found"], 404);
+        }
+
+        // Validate the input data for the update
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'phone_no' => 'required',
+            'password' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status_code' => 400, 'message' => "Bad Request"], 400);
+        }
+
+        // Update the user information
+        $user->first_name = $request->input('first_name');
+        $user->last_name = $request->input('last_name');
+        $user->phone_no = $request->input('phone_no');
+        $user->password = bcrypt($request->input('password'));
+        $user->save();
+    
+        return response()->json([
+            'status_code' => 200,
+            'message' => "User updated successfully",
+            'user' => $user,
+        ]);
+    }
+
+    public function deleteUser($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return response()->json(['status_code' => 404, 'message' => "User not found"], 404);
+        }
+
+        // Delete the user
+        $user->delete();
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => "User deleted successfully",
+        ]);
+    }
+
     public function verifyOTP(Request $request)
     {
         $validator = Validator::make($request->all(), [

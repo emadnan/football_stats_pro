@@ -24,6 +24,9 @@ use App\Http\Controllers\SMSController;
 
 Route::group(['middleware' => 'auth:sanctum'], function(){
     //All secure URL's
+    Route::get("/get-user/{id}", [UserController::class, 'getUserById']);
+    Route::post('/update-user/{id}', [UserController::class, 'updateUser']); 
+    Route::post('/delete-user/{id}', [UserController::class, 'deleteUser']); 
     Route::post('/logout', [UserController::class,'logout']);
 });
 
