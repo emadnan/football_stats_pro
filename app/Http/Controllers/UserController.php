@@ -177,6 +177,43 @@ class UserController extends Controller
         ]);
     }
 
+    public function resendVerification(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['status_code' => 400, 'message' => "Bad Request"], 422);
+        }
+
+        // Find the user by email
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json(['status_code' => 404, 'message' => "User not found"], 404);
+        }
+
+        // Check if the user is already verified
+        if ($user->status == 1) {
+            return response()->json(['status_code' => 400, 'message' => "User is already verified"], 400);
+        }
+
+        // Generate a new OTP
+        $otp = $this->generateOTP();
+        $user->otp = $otp;
+        $user->otp_generated_at = now();
+        $user->save();
+
+        // Send the new OTP to the user's email
+        $fromAddress = env('MAIL_FROM_ADDRESS');
+        Mail::to($user->email)->send(new OtpMail($otp, $user->first_name, $fromAddress));
+
+        return response()->json([
+            'status_code' => 200,
+            'message' => "New OTP sent to the registered email address",
+        ]);
+    }
 
     private function generateOTP()
     {

@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 Route::post("login", [UserController::class,'index']);
 Route::post('/register', [UserController::class,'register']);
 Route::get("users", [UserController::class,'getUsers']);
+Route::post('/resend-verification', [UserController::class, 'resendVerification']);
 
 // New routes for OTP handling
 Route::post('/verify-otp', [UserController::class, 'verifyOTP']); // Route to verify OTP during registration
