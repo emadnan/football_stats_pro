@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\SummaryStats;
 
 class LiveStatsController extends Controller
 {
@@ -39,5 +40,22 @@ class LiveStatsController extends Controller
         } else {
             echo "cURL Error:" . $err;
         }
+    }
+    function getSummaryStats($value='')
+    {
+        $take = !empty(\Request::input('take')) ? \Request::input('take') : null;
+        $skip = !empty(\Request::input('skip')) ? \Request::input('skip') : 0;
+
+        $queryObj = SummaryStats::select('SummaryStats.*');
+
+        if(!empty($take)){
+            $queryObj->take($take);
+        }
+        if(!empty($skip)){
+            $queryObj->skip($skip);
+        }
+
+        $SummaryStats = $queryObj->get();
+        return response()->json(['SummaryStats' => $SummaryStats]);
     }
 }

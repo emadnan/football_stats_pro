@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/update-user/{id}', [UserController::class, 'updateUser']); 
     Route::post('/delete-user/{id}', [UserController::class, 'deleteUser']); 
     Route::post('/logout', [UserController::class,'logout']);
+    Route::get('/getSummaryStats', [LiveStatsController::class,'getSummaryStats']);
+
 });
 
 Route::post("login", [UserController::class,'index']);
