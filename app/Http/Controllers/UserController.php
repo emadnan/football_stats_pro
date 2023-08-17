@@ -103,7 +103,7 @@ class UserController extends Controller
             'first_name' => 'required',
             'last_name' => 'required',
             'phone_no' => 'required',
-            'password' => 'required',
+            // 'password' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -114,7 +114,7 @@ class UserController extends Controller
         $user->first_name = $request->input('first_name');
         $user->last_name = $request->input('last_name');
         $user->phone_no = $request->input('phone_no');
-        $user->password = bcrypt($request->input('password'));
+        // $user->password = bcrypt($request->input('password'));
         $user->save();
     
         return response()->json([
