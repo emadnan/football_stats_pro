@@ -46,7 +46,7 @@ class LiveStatsController extends Controller
         $take = !empty(\Request::input('take')) ? \Request::input('take') : null;
         $skip = !empty(\Request::input('skip')) ? \Request::input('skip') : 0;
 
-        $queryObj = SummaryStats::select('SummaryStats.*');
+        $queryObj = SummaryStats::select('summarystats.*');
 
         if(!empty($take)){
             $queryObj->take($take);
