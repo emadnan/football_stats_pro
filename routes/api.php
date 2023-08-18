@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LiveStatsController;
 use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\SMSController;
+use App\Http\Controllers\MatchStatsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,3 +52,4 @@ Route::get("/by-basic", [MatchesController::class,'getByBasic']);
 Route::get("/by-full", [MatchesController::class,'getByFull']);
 Route::get("/odds", [MatchesController::class,'getOdds']);
 Route::get("/view-progressive", [MatchesController::class,'getViewProgressive']);
+Route::get("/h2hgames", [MatchStatsController::class,'createHead2Head']);
