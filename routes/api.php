@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/delete-user/{id}', [UserController::class, 'deleteUser']); 
     Route::post('/logout', [UserController::class,'logout']);
     Route::get('/getSummaryStats', [LiveStatsController::class,'getSummaryStats']);
+    Route::get("/get-matchesByDate/{date}", [MatchesController::class,'getMatchsByDate']);
 
 });
 
@@ -54,3 +55,4 @@ Route::get("/odds", [MatchesController::class,'getOdds']);
 Route::get("/view-progressive", [MatchesController::class,'getViewProgressive']);
 Route::get("/h2hgames", [MatchStatsController::class,'createHead2Head']);
 Route::get("/teamlg", [MatchStatsController::class,'createTeamLastMatches']);
+
