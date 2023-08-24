@@ -7,6 +7,7 @@ use App\Http\Controllers\LiveStatsController;
 use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\MatchStatsController;
+use App\Http\Controllers\AlertController;
 
 /*
 |--------------------------------------------------------------------------
@@ -55,4 +56,7 @@ Route::get("/odds", [MatchesController::class,'getOdds']);
 Route::get("/view-progressive", [MatchesController::class,'getViewProgressive']);
 Route::get("/h2hgames", [MatchStatsController::class,'createHead2Head']);
 Route::get("/teamlg", [MatchStatsController::class,'createTeamLastMatches']);
+Route::post('/create_alert', [AlertController::class, 'createAlert']); 
+Route::get('/get-alerts', [AlertController::class, 'getAlerts']); 
+
 
