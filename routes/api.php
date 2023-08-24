@@ -32,6 +32,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/logout', [UserController::class,'logout']);
     Route::get('/getSummaryStats', [LiveStatsController::class,'getSummaryStats']);
     Route::get("/get-matchesByDate/{date}", [MatchesController::class,'getMatchsByDate']);
+    Route::post('/create_alert', [AlertController::class, 'createAlert']); 
+    Route::get('/get-alerts', [AlertController::class, 'getAlerts']);
 
 });
 
@@ -56,7 +58,6 @@ Route::get("/odds", [MatchesController::class,'getOdds']);
 Route::get("/view-progressive", [MatchesController::class,'getViewProgressive']);
 Route::get("/h2hgames", [MatchStatsController::class,'createHead2Head']);
 Route::get("/teamlg", [MatchStatsController::class,'createTeamLastMatches']);
-Route::post('/create_alert', [AlertController::class, 'createAlert']); 
-Route::get('/get-alerts', [AlertController::class, 'getAlerts']); 
+ 
 
 

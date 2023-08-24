@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Alert;
 use App\Models\AlertsDetail;
+use App\Models\User;
 
 class AlertController extends Controller
 {
