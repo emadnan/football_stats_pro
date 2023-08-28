@@ -35,12 +35,14 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get("/get-matchesByDate/{date}", [MatchesController::class,'getMatchsByDate']);
     Route::post('/create_alert', [AlertController::class, 'createAlert']); 
     Route::get('/get-alerts', [AlertController::class, 'getAlerts']);
+    Route::post('/update-alerts/{id}', [AlertController::class, 'updateAlert']);
+    Route::post('/delete-alerts/{id}', [AlertController::class, 'destroyAlert']);
+    Route::post('/create_listBuilder', [ListBuilderController::class, 'createListBuilder']); 
+    Route::get('/get-listBuilder', [ListBuilderController::class, 'getListBuilder']);
 
 });
-Route::post('/create_listBuilder', [ListBuilderController::class, 'createListBuilder']); 
-Route::get('/get-listBuilder', [ListBuilderController::class, 'getListBuilder']);
-Route::post('/update-alerts/{id}', [AlertController::class, 'updateAlert']);
-Route::post('/delete-alerts/{id}', [AlertController::class, 'destroyAlert']);
+
+
 Route::post("login", [UserController::class,'index']);
 Route::post('/register', [UserController::class,'register']);
 Route::get("users", [UserController::class,'getUsers']);
