@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Alert;
 use App\Models\AlertsDetail;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class AlertController extends Controller
 {
@@ -56,6 +57,44 @@ class AlertController extends Controller
         $alert = Alert::with('details')
         ->get();
         return response()->json(['alerts' => $alert]);
+    }
+    //Eidt API
+     public function updateAlert($id)
+    {
+        $alert = DB::table('alerts')->where('id', $id)->update([
+            'title' => \Request::input('title'),
+            'description' => \Request::input('description'),
+            'is_on' => \Request::input('is_on')
+
+        ]);
+
+        $this->alertDetails($id);
+        return response()->json(['message' => 'updated']);
+
+    }
+    public function alertDetails($alertId)
+    {
+        $details = \Request::input('details');
+        DB::table('alerts_details')->where('alerts_id',$alertId)->delete();
+        if (!empty($details)) {
+            foreach ($details as $key => $value) {
+                $alertsDetail = new AlertsDetail();
+                $alertsDetail->alerts_id = $alertId;
+                $alertsDetail->dropdown1_id = $value['dropdown1_id'];
+                $alertsDetail->operator_id = $value['operator_id'];
+                $alertsDetail->input_value = $value['input_value'];
+                $alertsDetail->is_AND = $value['is_AND'];
+                $result=$alertsDetail->save();
+                
+            }
+        }
+    }
+    // Delete API
+    public function destroyAlert($id)
+    {
+        $delete = Alert::destroy($id);
+        $deleteDetail = AlertsDetail::where('alerts_id', $id)->delete();
+        return response()->json(['message' => 'deleted']);
     }
     function alertValidation(){
     $rules = array(

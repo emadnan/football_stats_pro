@@ -37,6 +37,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
 
 });
 
+Route::post('/update-alerts/{id}', [AlertController::class, 'updateAlert']);
+Route::post('/delete-alerts/{id}', [AlertController::class, 'destroyAlert']);
 Route::post("login", [UserController::class,'index']);
 Route::post('/register', [UserController::class,'register']);
 Route::get("users", [UserController::class,'getUsers']);
