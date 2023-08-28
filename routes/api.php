@@ -8,6 +8,7 @@ use App\Http\Controllers\MatchesController;
 use App\Http\Controllers\SMSController;
 use App\Http\Controllers\MatchStatsController;
 use App\Http\Controllers\AlertController;
+use App\Http\Controllers\ListBuilderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +37,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('/get-alerts', [AlertController::class, 'getAlerts']);
 
 });
-
+Route::post('/create_listBuilder', [ListBuilderController::class, 'createListBuilder']); 
+Route::get('/get-listBuilder', [ListBuilderController::class, 'getListBuilder']);
 Route::post('/update-alerts/{id}', [AlertController::class, 'updateAlert']);
 Route::post('/delete-alerts/{id}', [AlertController::class, 'destroyAlert']);
 Route::post("login", [UserController::class,'index']);
