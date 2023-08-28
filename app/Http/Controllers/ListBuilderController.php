@@ -58,6 +58,45 @@ class ListBuilderController extends Controller
         ->get();
         return response()->json(['list_builders' => $list]);
     }
+    //Eidt API
+     public function updateListBuilder($id)
+    {
+        $alert = DB::table('list_builders')->where('id', $id)->update([
+            'title' => \Request::input('title'),
+            'description' => \Request::input('description'),
+            'is_on' => \Request::input('is_on')
+
+        ]);
+
+        $this->listDetails($id);
+        return response()->json(['message' => 'updated']);
+
+    }
+    public function listDetails($listId)
+    {
+        $details = \Request::input('details');
+        DB::table('list_builders_details')->where('list_id',$listId)->delete();
+        if (!empty($details)) {
+            foreach ($details as $key => $value) {
+                $listDetail = new ListBuildersDetail();
+                $listDetail->list_id = $listId;
+                $listDetail->dropdown1_id = $value['dropdown1_id'];
+                $listDetail->operator_id = $value['operator_id'];
+                $listDetail->input_value = $value['input_value'];
+                $listDetail->is_AND = $value['is_AND'];
+                $result=$listDetail->save();
+                
+            }
+        }
+    }
+    
+    // Delete API
+    public function destroyList($id)
+    {
+        $delete = ListBuilder::destroy($id);
+        $deleteDetail = ListBuildersDetail::where('list_id', $id)->delete();
+        return response()->json(['message' => 'deleted']);
+    }
     function listBuilderValidation(){
     $rules = array(
         "title"=> "required",
