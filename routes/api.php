@@ -41,6 +41,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('/get-listBuilder', [ListBuilderController::class, 'getListBuilder']);
     Route::post('/update-listBuilder/{id}', [ListBuilderController::class, 'updateListBuilder']);
     Route::post('/delete-listBuilder/{id}', [ListBuilderController::class, 'destroyList']);
+    Route::get("/search_league_name/{name}", [MatchesController::class,'searchLeague']);
 
 });
 
@@ -66,7 +67,7 @@ Route::get("/odds", [MatchesController::class,'getOdds']);
 Route::get("/view-progressive", [MatchesController::class,'getViewProgressive']);
 Route::get("/h2hgames", [MatchStatsController::class,'createHead2Head']);
 Route::get("/teamlg", [MatchStatsController::class,'createTeamLastMatches']);
-Route::get("/search_league_name/{name}", [MatchesController::class,'searchLeague']);
+
  
 
 
