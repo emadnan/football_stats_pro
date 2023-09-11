@@ -96,7 +96,7 @@ class MatchesController extends Controller
     {
         // print_r('from cntroller');
         // exit();
-        $match = Match::where('m_league_name', 'LIKE', '%'.$name.'%')->get();
+        $match = DB::table('matches')->where('m_league_name', 'LIKE', '%'.$name.'%')->get();
         return response()->json(['league_name' => $match]);
     }
 }
