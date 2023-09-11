@@ -92,4 +92,11 @@ class MatchesController extends Controller
         $match = $queryObj->get();
         return response()->json(['matches' => $match]);
     }
+    public function searchLeague($name)
+    {
+        print_r('from cntroller');
+        exit();
+        $match = Match::where('m_league_name', 'LIKE', $name)->get();
+        return response()->json(['league_name' => $match]);
+    }
 }
