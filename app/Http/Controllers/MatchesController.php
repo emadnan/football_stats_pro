@@ -94,9 +94,9 @@ class MatchesController extends Controller
     }
     public function searchLeague($name)
     {
-        print_r('from cntroller');
-        exit();
-        $match = Match::where('m_league_name', 'LIKE', $name)->get();
+        // print_r('from cntroller');
+        // exit();
+        $match = Match::where('m_league_name', 'LIKE', '%'.$name.'%')->get();
         return response()->json(['league_name' => $match]);
     }
 }
