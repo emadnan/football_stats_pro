@@ -45,8 +45,10 @@ class LiveStatsController extends Controller
     {
         $take = !empty(\Request::input('take')) ? \Request::input('take') : null;
         $skip = !empty(\Request::input('skip')) ? \Request::input('skip') : 0;
+        $date = date('Y-m-d',strtotime(\Request::input('date')));
 
-        $queryObj = SummaryStats::select('summarystats.*');
+        $queryObj = SummaryStats::select('summarystats.*')
+        ->whereDate('ss_fixture_date', $date);
 
         if(!empty($take)){
             $queryObj->take($take);
