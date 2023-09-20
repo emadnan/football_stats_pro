@@ -9,6 +9,7 @@ use App\Http\Controllers\SMSController;
 use App\Http\Controllers\MatchStatsController;
 use App\Http\Controllers\AlertController;
 use App\Http\Controllers\ListBuilderController;
+use App\Http\Controllers\SummaryStatsCntroller;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +68,7 @@ Route::get("/odds", [MatchesController::class,'getOdds']);
 Route::get("/view-progressive", [MatchesController::class,'getViewProgressive']);
 Route::get("/h2hgames", [MatchStatsController::class,'createHead2Head']);
 Route::get("/teamlg", [MatchStatsController::class,'createTeamLastMatches']);
+Route::post('/download-stats', [SummaryStatsCntroller::class, 'getSummaryStatsByDate']);
 
  
 
