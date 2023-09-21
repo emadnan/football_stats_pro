@@ -69,7 +69,7 @@ Route::get("/view-progressive", [MatchesController::class,'getViewProgressive'])
 Route::get("/h2hgames", [MatchStatsController::class,'createHead2Head']);
 Route::get("/teamlg", [MatchStatsController::class,'createTeamLastMatches']);
 Route::post('/download-stats', [SummaryStatsCntroller::class, 'getSummaryStatsByDate']);
-
+Route::post('/summar-stats-advance-filter', [SummaryStatsCntroller::class, 'getSummaryStatsAdvaceFilter']);
  
 
 
