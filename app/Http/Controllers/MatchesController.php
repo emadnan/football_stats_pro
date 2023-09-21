@@ -101,7 +101,7 @@ class MatchesController extends Controller
     }
     public function getMatchesListByDate()
     {
-        $date = \Request::input('date');
+        $date = date('Y-m-d', strtotime(\Request::input('date')));
         $queryObj = DB::table('matches')->select('matches.m_fixture_status','matches.m_fixture_date','matches.m_fixture_timer','matches.m_league_name','matches.m_hometeam_name','matches.m_hometeam_score','matches.m_awayteam_name','matches.m_awayteam_score')
         ->whereDate('m_fixture_date', $date)
         ->get();
