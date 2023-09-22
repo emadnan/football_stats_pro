@@ -92,11 +92,15 @@ class MatchesController extends Controller
         $match = $queryObj->get();
         return response()->json(['matches' => $match]);
     }
-    public function searchLeague($name)
+    public function searchLeague()
     {
-        // print_r('from cntroller');
-        // exit();
-        $match = DB::table('matches')->where('m_league_name', 'LIKE', '%'.$name.'%')->get();
+        $name = \Request::input('name');
+        $date = \Request::input('date');
+         $mDate = date('Y-m-d', strtotime($date));
+        $match = DB::table('matches')
+        ->where('m_league_name', 'LIKE', '%'.$name.'%')
+        ->whereDate('m_fixture_date', $mDate)
+        ->get();
         return response()->json(['league_name' => $match]);
     }
     public function getMatchesListByDate()

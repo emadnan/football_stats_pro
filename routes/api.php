@@ -42,11 +42,11 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get('/get-listBuilder', [ListBuilderController::class, 'getListBuilder']);
     Route::post('/update-listBuilder/{id}', [ListBuilderController::class, 'updateListBuilder']);
     Route::post('/delete-listBuilder/{id}', [ListBuilderController::class, 'destroyList']);
-    Route::get("/search_league_name/{name}", [MatchesController::class,'searchLeague']);
+    
 
 });
 
-
+Route::get("/search_league_name", [MatchesController::class,'searchLeague']);
 Route::post("login", [UserController::class,'index']);
 Route::post('/register', [UserController::class,'register']);
 Route::get("users", [UserController::class,'getUsers']);
