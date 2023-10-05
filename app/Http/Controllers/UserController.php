@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Validator;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\OtpMail;
@@ -49,11 +50,11 @@ class UserController extends Controller
             'phone_no' => 'required',
             'password' => 'required',
         ]);
-    
+
         if ($validator->fails()) {
             return response()->json(['status_code' => 400, 'message' => "bad Request"], 422);
         }
-    
+
         // Generate and save OTP
         $otp = $this->generateOTP();
         $user = new User();
@@ -66,7 +67,7 @@ class UserController extends Controller
         // $user->status = ''; // Set a temporary status for pending verification
         $user->otp_generated_at = now();
         $user->save();
-    
+
         $fromAddress = env('MAIL_FROM_ADDRESS');
         Mail::to($user->email)->send(new OtpMail($otp, $user->first_name, $fromAddress));
 
@@ -79,11 +80,11 @@ class UserController extends Controller
     public function getUserById($id)
     {
         $user = User::find($id);
-    
+
         if (!$user) {
             return response()->json(['status_code' => 404, 'message' => "User not found"], 404);
         }
-    
+
         return response()->json([
             'status_code' => 200,
             'user' => $user,
@@ -116,7 +117,7 @@ class UserController extends Controller
         $user->phone_no = $request->input('phone_no');
         // $user->password = bcrypt($request->input('password'));
         $user->save();
-    
+
         return response()->json([
             'status_code' => 200,
             'message' => "User updated successfully",
@@ -222,7 +223,7 @@ class UserController extends Controller
 
     public function logout(Request $request)
     {
-        
+
         $request->user()->currentAccessToken()->delete();
         return response()->json([
             'status_code'=>200,
@@ -234,5 +235,33 @@ class UserController extends Controller
     {
         $users = User::all();
         return response()->json(['users'=> $users]);
+    }
+    function forgetpassword()
+    {
+
+        $email = \Request::input('email');
+        $otp = $this->generateOTP();
+        $fromAddress = env('MAIL_FROM_ADDRESS');
+        $userDetails = User::where('email', $email)->first();
+        // print_r($userDetails);
+        // exit();
+        
+        if (!empty($userDetails)) {
+            $user_name = $userDetails->first_name;
+            $user = DB::table('users')->where('email', $email)
+            ->update(['otp' => $otp,
+                'otp_generated_at' => now()]);
+            Mail::to($email)->send(new OtpMail($otp, $user_name, $fromAddress));
+
+            return response()->json([
+                'status_code' => 200,
+                'message' => "OTP sent to the registered Email"
+            ]);
+        }
+        else{
+            return response()->json(['invalid_email']);
+        }
+        
+
     }
 }
