@@ -264,4 +264,13 @@ class UserController extends Controller
         
 
     }
+    public function resetPassword($value='')
+    {
+        $Password = \Request::input('new_password');
+        $newPAssword = bcrypt($Password);
+        $email = \Request::input('email');
+        $updatePassword = User::where('email', $email)
+        ->update(['password' => $newPAssword]);
+        return response()->json(['message'=>'updated']);
+    }
 }

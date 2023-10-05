@@ -73,5 +73,7 @@ Route::post('/summar-stats-advance-filter', [SummaryStatsCntroller::class, 'getS
 Route::post('/download-matches', [MatchesController::class, 'getMatchesListByDate']);
 
  Route::post('/forget-password', [UserController::class, 'forgetpassword']);
+ Route::post('/reset-password', [UserController::class, 'resetPassword']);
+
 
 
