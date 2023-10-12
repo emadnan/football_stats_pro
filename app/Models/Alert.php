@@ -9,7 +9,11 @@ class Alert extends Model
 {
     use HasFactory;
 
-    function details(){
-        return $this->hasMany('App\Models\AlertsDetail','alerts_id', 'id');
+    // function queries(){
+    //     return $this->hasMany('App\Models\AlertQuery','alert_id', 'id');
+    // }
+    function queries()
+    {
+        return $this->hasMany(AlertQuery::class);
     }
 }

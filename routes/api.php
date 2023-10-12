@@ -34,8 +34,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/logout', [UserController::class,'logout']);
     Route::get('/getSummaryStats', [LiveStatsController::class,'getSummaryStats']);
     Route::get("/get-matchesByDate/{date}", [MatchesController::class,'getMatchsByDate']);
-    Route::post('/create_alert', [AlertController::class, 'createAlert']); 
-    Route::get('/get-alerts', [AlertController::class, 'getAlerts']);
+    
+    
     Route::post('/update-alerts/{id}', [AlertController::class, 'updateAlert']);
     Route::post('/delete-alerts/{id}', [AlertController::class, 'destroyAlert']);
     Route::post('/create_listBuilder', [ListBuilderController::class, 'createListBuilder']); 
@@ -45,8 +45,8 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::get("/search_league_name", [MatchesController::class,'searchLeague']);
 
 });
-
-
+Route::post('/create_alert', [AlertController::class, 'createAlert']); 
+Route::get('/get-alerts', [AlertController::class, 'getAlerts']);
 Route::post("login", [UserController::class,'index']);
 Route::post('/register', [UserController::class,'register']);
 Route::get("users", [UserController::class,'getUsers']);
