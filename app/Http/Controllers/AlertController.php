@@ -84,23 +84,37 @@ class AlertController extends Controller
 
         ]);
 
-        $this->alertDetails($id);
+        $this->UpdatAlertQuery($id);
         return response()->json(['message' => 'updated']);
 
     }
-    public function alertDetails($alertId)
+    public function UpdatAlertQuery($alertId)
     {
-        $details = \Request::input('details');
-        DB::table('alerts_details')->where('alerts_id',$alertId)->delete();
-        if (!empty($details)) {
-            foreach ($details as $key => $value) {
-                $alertsDetail = new AlertsDetail();
-                $alertsDetail->alerts_id = $alertId;
-                $alertsDetail->dropdown1_id = $value['dropdown1_id'];
-                $alertsDetail->operator_id = $value['operator_id'];
-                $alertsDetail->input_value = $value['input_value'];
-                $alertsDetail->is_AND = $value['is_AND'];
-                $result=$alertsDetail->save();
+        $queries = \Request::input('queries');
+        DB::table('alert_queries')->where('alert_id',$alertId)->delete();
+        if (!empty($queries)) {
+            foreach ($queries as $key => $value) {
+                $alertsQueries = new AlertQuery();
+                $alertsQueries->alert_id = $alertId;
+                $alertsQueries->is_AND = $value['is_AND'];
+                $result=$alertsQueries->save();
+                $this->UpdateAlertRule($alertsQueries->id);
+                
+            }
+        }
+    }
+    public function UpdateAlertRule($queryId)
+    {
+        $rules = \Request::input('rules');
+        DB::table('alert_rules')->where('alert_query_id',$queryId)->delete();
+        if (!empty($rules)) {
+            foreach ($rules as $key => $value) {
+                $rules = new AlertRules();
+                $rules->alert_query_id = $queryId;
+                $rules->dropdown1_id = $value['dropdown1_id'];
+                $rules->operator_id = $value['operator_id'];
+                $rules->input_value = $value['input_value'];
+                $result=$rules->save();
                 
             }
         }
