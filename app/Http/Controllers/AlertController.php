@@ -15,7 +15,7 @@ class AlertController extends Controller
 {
     public function Createalert()
     {
-        // $user_id = \Auth::user()->id;
+        $user_id = \Auth::user()->id;
         $validator = $this->alertValidation();
         if ($validator->fails()) {
             return response()->json($validator->errors(),401);
@@ -24,7 +24,7 @@ class AlertController extends Controller
                 $alert = new Alert();
                 $alert->title = \Request::input('title');
                 $alert->description = \Request::input('description');
-                $alert->user_id = 1;
+                $alert->user_id = $user_id;
                 $alert->is_on = \Request::input('is_on');
                 $result = $alert->save();
                 $this->alertQuery($alert->id);
