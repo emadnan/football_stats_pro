@@ -74,6 +74,13 @@ class AlertController extends Controller
         ->get();
         return response()->json(['alerts' => $alert]);
     }
+    public function getAlertsById()
+    {
+        $alert = Alert::where('id', $id)
+        ->with('queries.rules')
+        ->get();
+        return response()->json(['alerts_by_id' => $alert]);
+    }
     //Eidt API
     public function updateAlert($id)
     {
