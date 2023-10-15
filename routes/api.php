@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     
     Route::post('/create_alert', [AlertController::class, 'createAlert']); 
     Route::get('/get-alerts', [AlertController::class, 'getAlerts']);
-    Route::get('/get-alerts/{id}', [AlertController::class, 'getAlertsById']);
+    Route::get('/get-alertsById/{id}', [AlertController::class, 'getAlertsById']);
     Route::post('/update-alerts/{id}', [AlertController::class, 'updateAlert']);
     Route::post('/delete-alerts/{id}', [AlertController::class, 'destroyAlert']);
     Route::post('/create_listBuilder', [ListBuilderController::class, 'createListBuilder']); 

@@ -74,7 +74,7 @@ class AlertController extends Controller
         ->get();
         return response()->json(['alerts' => $alert]);
     }
-    public function getAlertsById()
+    public function getAlertsById($id)
     {
         $alert = Alert::where('id', $id)
         ->with('queries.rules')
