@@ -7,6 +7,8 @@ use Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Models\ListBuilder;
 use App\Models\ListBuildersDetail;
+use App\Models\ListBuilderQuery;
+use App\Models\ListBuilderRule;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
@@ -26,7 +28,7 @@ class ListBuilderController extends Controller
         $list->user_id = $user_id;
         $list->is_on = \Request::input('is_on');
         $result = $list->save();
-        $this->addListBuildertDetail($list->id);
+        $this->list_builderQuery($list->id);
         return response()->json(['message' => 'success']);
     }
     catch (\Exception $e) {
@@ -36,6 +38,37 @@ class ListBuilderController extends Controller
 }
 
     }
+    public function list_builderQuery($alertId)
+    {
+        $queries = \Request::input('queries');
+        if (!empty($queries)) {
+            foreach ($queries as $key => $value) {
+                $queries = new ListBuilderQuery();
+                $queries->list_builder_id = $alertId;
+                $queries->is_AND = $value['is_AND'];
+                $result = $queries->save();
+                $this->list_builderRules($queries->id);
+            }
+
+        }
+    
+    }
+    public function list_builderRules($queryId)
+    {
+        $rules = \Request::input('rules');
+        if (!empty($rules)) {
+            foreach ($rules as $key => $value) {
+                $rules = new ListBuilderRule();
+                $rules->list_builder_query_id = $queryId;
+                $rules->dropdown1_id = $value['dropdown1_id'];
+                $rules->operator_id = $value['operator_id'];
+                $rules->input_value = $value['input_value'];
+                $result = $rules->save();
+
+            }
+        }
+
+    } 
     public function addListBuildertDetail($listId)
     {
         $details = \Request::input('details');
