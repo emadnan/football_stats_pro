@@ -45,7 +45,7 @@ Route::group(['middleware' => 'auth:sanctum'], function(){
     Route::post('/update-listBuilder/{id}', [ListBuilderController::class, 'updateListBuilder']);
     Route::post('/delete-listBuilder/{id}', [ListBuilderController::class, 'destroyList']);
     Route::get("/search_league_name", [MatchesController::class,'searchLeague']);
-
+    Route::get('/get-list_builderById/{id}', [ListBuilderController::class, 'getListBuilderById']);
 
 });
 

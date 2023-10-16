@@ -130,7 +130,7 @@ class AlertController extends Controller
     public function destroyAlert($id)
     {
         $delete = Alert::destroy($id);
-        $deleteDetail = AlertsDetail::where('alerts_id', $id)->delete();
+        // $deleteDetail = AlertsDetail::where('alerts_id', $id)->delete();
         return response()->json(['message' => 'deleted']);
     }
     function alertValidation(){

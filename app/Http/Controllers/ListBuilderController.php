@@ -158,8 +158,15 @@ class ListBuilderController extends Controller
     public function destroyList($id)
     {
         $delete = ListBuilder::destroy($id);
-        $deleteDetail = ListBuildersDetail::where('list_id', $id)->delete();
+        // $deleteDetail = ListBuildersDetail::where('list_id', $id)->delete();
         return response()->json(['message' => 'deleted']);
+    }
+    public function getListBuilderById($id)
+    {
+        $lists = ListBuilder::where('id', $id)
+        ->with('queries.rules')
+        ->get();
+        return response()->json(['list_builders_by_id' => $lists]);
     }
     function listBuilderValidation(){
     $rules = array(
