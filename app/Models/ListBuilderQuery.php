@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ListBuilderQuery extends Model
 {
     use HasFactory;
+
+
+    function rules()
+    {
+        return $this->hasMany(ListBuilderRule::class);
+    }
 }

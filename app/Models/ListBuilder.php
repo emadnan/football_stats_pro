@@ -11,4 +11,8 @@ class ListBuilder extends Model
     function details(){
         return $this->hasMany('App\Models\ListBuildersDetail','list_id', 'id');
     }
+    function queries()
+    {
+        return $this->hasMany(ListBuilderQuery::class);
+    }
 }

@@ -87,7 +87,7 @@ class ListBuilderController extends Controller
     } 
     public function getListBuilder()
     {
-        $list = ListBuilder::with('details')
+        $list = ListBuilder::with('queries.rules')
         ->get();
         return response()->json(['list_builders' => $list]);
     }
