@@ -101,7 +101,7 @@ class ListBuilderController extends Controller
 
         ]);
 
-        $this->listDetails($id);
+        $this->UpdatListBuilderQuery($id);
         return response()->json(['message' => 'updated']);
 
     }
@@ -118,6 +118,37 @@ class ListBuilderController extends Controller
                 $listDetail->input_value = $value['input_value'];
                 $listDetail->is_AND = $value['is_AND'];
                 $result=$listDetail->save();
+                
+            }
+        }
+    }
+    public function UpdatListBuilderQuery($listId)
+    {
+        $queries = \Request::input('queries');
+        DB::table('list_builder_queries')->where('list_builder_id',$listId)->delete();
+        if (!empty($queries)) {
+            foreach ($queries as $key => $value) {
+                $alertsQueries = new ListBuilderQuery();
+                $alertsQueries->list_builder_id = $listId;
+                $alertsQueries->is_AND = $value['is_AND'];
+                $result=$alertsQueries->save();
+                $this->UpdateListBuilderRule($alertsQueries->id);
+                
+            }
+        }
+    }
+    public function UpdateListBuilderRule($listBuilderQueryId)
+    {
+        $rules = \Request::input('rules');
+        DB::table('list_builder_rules')->where('list_builder_query_id',$listBuilderQueryId)->delete();
+        if (!empty($rules)) {
+            foreach ($rules as $key => $value) {
+                $rules = new ListBuilderRule();
+                $rules->list_builder_query_id = $listBuilderQueryId;
+                $rules->dropdown1_id = $value['dropdown1_id'];
+                $rules->operator_id = $value['operator_id'];
+                $rules->input_value = $value['input_value'];
+                $result=$rules->save();
                 
             }
         }
