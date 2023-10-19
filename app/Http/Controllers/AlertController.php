@@ -46,17 +46,20 @@ class AlertController extends Controller
                 $queries->alert_id = $alertId;
                 $queries->is_AND = $value['is_AND'];
                 $result = $queries->save();
-                $this->alertRules($queries->id);
+                // $this->alertRules($queries->id);
+                $this->alertRules($queries->id, $value['rules']);
             }
 
         }
     
     } 
-    public function alertRules($queryId)
+    public function alertRules($queryId, $rulesData)
     {
-        $rules = \Request::input('rules');
-        if (!empty($rules)) {
-            foreach ($rules as $key => $value) {
+        // $rules = \Request::input('queries.rules');
+        // print_r($rulesData);
+        // exit();
+        if (!empty($rulesData)) {
+            foreach ($rulesData as $key => $value) {
                 $rules = new AlertRules();
                 $rules->alert_query_id = $queryId;
                 $rules->dropdown1_id = $value['dropdown1_id'];
