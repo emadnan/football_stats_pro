@@ -132,17 +132,17 @@ class ListBuilderController extends Controller
                 $alertsQueries->list_builder_id = $listId;
                 $alertsQueries->is_AND = $value['is_AND'];
                 $result=$alertsQueries->save();
-                $this->UpdateListBuilderRule($alertsQueries->id);
+                $this->UpdateListBuilderRule($alertsQueries->id, $value['rules']);
                 
             }
         }
     }
-    public function UpdateListBuilderRule($listBuilderQueryId)
+    public function UpdateListBuilderRule($listBuilderQueryId, $rulesData)
     {
-        $rules = \Request::input('rules');
+        // $rules = \Request::input('rules');
         DB::table('list_builder_rules')->where('list_builder_query_id',$listBuilderQueryId)->delete();
-        if (!empty($rules)) {
-            foreach ($rules as $key => $value) {
+        if (!empty($rulesData)) {
+            foreach ($rulesData as $key => $value) {
                 $rules = new ListBuilderRule();
                 $rules->list_builder_query_id = $listBuilderQueryId;
                 $rules->dropdown1_id = $value['dropdown1_id'];
