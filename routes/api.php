@@ -76,6 +76,7 @@ Route::post('/download-matches', [MatchesController::class, 'getMatchesListByDat
 
 Route::post('/forget-password', [UserController::class, 'forgetpassword']);
 Route::post('/reset-password', [UserController::class, 'resetPassword']);
+Route::post('/stripe',[UserController::class,'stripePost']);
 
 
 
