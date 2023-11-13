@@ -359,8 +359,8 @@ class UserController extends Controller
         // $subscription_invoice->save();
         // $company->subscription_id = 2;
         // $company->save();
-        print_r('success');
-        exit();
+        // print_r('success');
+        // exit();
         return response()->json(['success', 'Payment successful! Now you can Add Cards']);
     }
 }
