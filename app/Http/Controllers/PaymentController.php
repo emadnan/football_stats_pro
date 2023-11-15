@@ -17,6 +17,7 @@ class PaymentController extends Controller
             $paymentIntent = $stripe->paymentIntents->create([
                 'payment_method_types' => ['card'],
                 'amount' => 7.50 * 100,
+                'description' => 'Testing',
                 'currency' => 'eur',
             ]);
 
