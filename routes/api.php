@@ -10,6 +10,7 @@ use App\Http\Controllers\MatchStatsController;
 use App\Http\Controllers\AlertController;
 use App\Http\Controllers\ListBuilderController;
 use App\Http\Controllers\SummaryStatsCntroller;
+use App\Http\Controllers\PaymentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -77,6 +78,7 @@ Route::post('/download-matches', [MatchesController::class, 'getMatchesListByDat
 Route::post('/forget-password', [UserController::class, 'forgetpassword']);
 Route::post('/reset-password', [UserController::class, 'resetPassword']);
 Route::post('/stripe',[UserController::class,'stripePost']);
+Route::post('/create-payment-intent', [PaymentController::class, 'createPaymentIntent']);
 
 
 
